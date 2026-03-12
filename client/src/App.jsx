@@ -11,6 +11,11 @@ import AdminDashboard from './pages/AdminDashboard'
 import Performance from './pages/Performance'
 import Resources from './pages/Resources'
 import Settings from './pages/Settings'
+import Quiz from './pages/Quiz'
+import Flashcards from './pages/Flashcards'
+import StudyTimer from './pages/StudyTimer'
+import Notes from './pages/Notes'
+import Leaderboard from './pages/Leaderboard'
 
 function App() {
   return (
@@ -37,6 +42,36 @@ function App() {
             <Route path="/student/resources" element={
               <PrivateRoute role="student">
                 <Resources />
+              </PrivateRoute>
+            } />
+            
+            <Route path="/student/quiz" element={
+              <PrivateRoute role="student">
+                <Quiz />
+              </PrivateRoute>
+            } />
+            
+            <Route path="/student/flashcards" element={
+              <PrivateRoute role="student">
+                <Flashcards />
+              </PrivateRoute>
+            } />
+            
+            <Route path="/student/timer" element={
+              <PrivateRoute role="student">
+                <StudyTimer />
+              </PrivateRoute>
+            } />
+            
+            <Route path="/student/notes" element={
+              <PrivateRoute role="student">
+                <Notes />
+              </PrivateRoute>
+            } />
+            
+            <Route path="/student/leaderboard" element={
+              <PrivateRoute role="student">
+                <Leaderboard />
               </PrivateRoute>
             } />
             

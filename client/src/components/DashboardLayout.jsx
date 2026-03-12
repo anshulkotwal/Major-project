@@ -55,6 +55,41 @@ const DashboardLayout = ({ children }) => {
               <span>Dashboard</span>
             </Link>
             <Link
+              to={`/${user?.role}/quiz`}
+              className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            >
+              <BookOpen className="w-5 h-5" />
+              <span>Take Quiz</span>
+            </Link>
+            <Link
+              to={`/${user?.role}/flashcards`}
+              className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            >
+              <BookOpen className="w-5 h-5" />
+              <span>Flashcards</span>
+            </Link>
+            <Link
+              to={`/${user?.role}/timer`}
+              className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            >
+              <BarChart3 className="w-5 h-5" />
+              <span>Study Timer</span>
+            </Link>
+            <Link
+              to={`/${user?.role}/notes`}
+              className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            >
+              <BookOpen className="w-5 h-5" />
+              <span>Quick Notes</span>
+            </Link>
+            <Link
+              to={`/${user?.role}/leaderboard`}
+              className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            >
+              <BarChart3 className="w-5 h-5" />
+              <span>Leaderboard</span>
+            </Link>
+            <Link
               to={`/${user?.role}/performance`}
               className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition"
             >
