@@ -10,11 +10,11 @@
 
 @layer utilities {
   .glass {
-    @apply bg-white/10 backdrop-blur-lg border border-white/20;
+    @apply bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl;
   }
   
   .glass-dark {
-    @apply bg-gray-900/50 backdrop-blur-lg border border-gray-700/50;
+    @apply bg-gray-900/50 backdrop-blur-lg border border-gray-700/50 shadow-xl;
   }
   
   .gradient-primary {
@@ -23,5 +23,21 @@
   
   .gradient-bg {
     @apply bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-blue-900/20;
+  }
+  
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .perspective-2000 {
+    perspective: 2000px;
+  }
+  
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
   }
 }

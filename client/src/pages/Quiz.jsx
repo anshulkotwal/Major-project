@@ -94,30 +94,77 @@ const Quiz = () => {
   if (!selectedSubject) {
     return (
       <DashboardLayout>
-        <div className="space-y-6">
-          <h1 className="text-3xl font-bold">Take a Quiz</h1>
-          <p className="text-gray-600 dark:text-gray-400">Choose a subject to test your knowledge</p>
+        {/* Animated Background */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none opacity-20">
+          <motion.div
+            animate={{
+              scale: [1, 1.5, 1],
+              rotate: [0, 180, 360],
+            }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full blur-3xl"
+          />
+          <motion.div
+            animate={{
+              scale: [1, 1.3, 1],
+              rotate: [360, 180, 0],
+            }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full blur-3xl"
+          />
+        </div>
+
+        <div className="space-y-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <h1 className="text-3xl font-bold">Take a Quiz</h1>
+            <p className="text-gray-600 dark:text-gray-400">Choose a subject to test your knowledge</p>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {Object.keys(quizData).map((subject, idx) => (
               <motion.div
                 key={subject}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
+                initial={{ opacity: 0, y: 20, rotateY: -30 }}
+                animate={{ opacity: 1, y: 0, rotateY: 0 }}
+                transition={{ delay: idx * 0.1, duration: 0.5 }}
+                whileHover={{ 
+                  scale: 1.05,
+                  rotateY: 10,
+                  rotateX: 5,
+                  z: 50,
+                  transition: { duration: 0.3 }
+                }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => startQuiz(subject)}
-                className="glass dark:glass-dark rounded-xl p-6 cursor-pointer hover:shadow-xl transition"
+                className="glass dark:glass-dark rounded-xl p-6 cursor-pointer hover:shadow-2xl transition-all relative overflow-hidden group"
+                style={{ transformStyle: 'preserve-3d' }}
               >
-                <div className="text-4xl mb-4">
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/10 group-hover:to-purple-500/10 transition-all duration-300" />
+                
+                {/* Shimmer effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                
+                <motion.div 
+                  className="text-6xl mb-4 relative z-10"
+                  whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.2 }}
+                  transition={{ duration: 0.5 }}
+                >
                   {subject === 'Mathematics' && '📐'}
                   {subject === 'Physics' && '⚛️'}
                   {subject === 'Chemistry' && '🧪'}
                   {subject === 'Programming' && '💻'}
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{subject}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                </motion.div>
+                <h3 className="text-xl font-semibold mb-2 relative z-10">{subject}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 relative z-10">
                   {quizData[subject].length} Questions • 5 mins
                 </p>
+                
+                {/* 3D border effect */}
+                <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-blue-500/50 transition-colors" />
               </motion.div>
             ))}
           </div>
@@ -132,28 +179,79 @@ const Quiz = () => {
       <DashboardLayout>
         <div className="max-w-2xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="glass dark:glass-dark rounded-xl p-8 text-center"
+            initial={{ opacity: 0, scale: 0.8, rotateY: -180 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ duration: 0.8, type: "spring" }}
+            className="glass dark:glass-dark rounded-xl p-8 text-center relative overflow-hidden"
           >
-            <Trophy className={`w-24 h-24 mx-auto mb-6 ${percentage >= 80 ? 'text-yellow-500' : percentage >= 60 ? 'text-blue-500' : 'text-gray-500'}`} />
+            {/* Confetti effect */}
+            {percentage >= 80 && (
+              <>
+                {[...Array(20)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ y: -100, x: Math.random() * 400 - 200, opacity: 1 }}
+                    animate={{ 
+                      y: 600, 
+                      rotate: Math.random() * 360,
+                      opacity: 0 
+                    }}
+                    transition={{ 
+                      duration: 2 + Math.random() * 2,
+                      delay: Math.random() * 0.5,
+                      repeat: Infinity,
+                      repeatDelay: 3
+                    }}
+                    className="absolute w-3 h-3 rounded-full"
+                    style={{ 
+                      backgroundColor: ['#f59e0b', '#3b82f6', '#8b5cf6', '#ec4899'][Math.floor(Math.random() * 4)],
+                      left: '50%'
+                    }}
+                  />
+                ))}
+              </>
+            )}
+            
+            <motion.div
+              animate={{ 
+                rotate: [0, -10, 10, -10, 0],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+            >
+              <Trophy className={`w-24 h-24 mx-auto mb-6 ${percentage >= 80 ? 'text-yellow-500' : percentage >= 60 ? 'text-blue-500' : 'text-gray-500'}`} />
+            </motion.div>
+            
             <h2 className="text-3xl font-bold mb-4">Quiz Completed!</h2>
-            <div className="text-6xl font-bold mb-4">{percentage}%</div>
+            
+            <motion.div 
+              className="text-6xl font-bold mb-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+            >
+              {percentage}%
+            </motion.div>
+            
             <p className="text-xl mb-6">You scored {score} out of {quizData[selectedSubject].length}</p>
             
             <div className="flex justify-center space-x-4">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(59, 130, 246, 0.5)" }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedSubject(null)}
-                className="px-6 py-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600"
+                className="px-6 py-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors"
               >
                 Take Another Quiz
-              </button>
-              <button
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => navigate('/student')}
                 className="px-6 py-3 rounded-lg glass dark:glass-dark hover:shadow-lg"
               >
                 Back to Dashboard
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         </div>
@@ -166,64 +264,106 @@ const Quiz = () => {
   return (
     <DashboardLayout>
       <div className="max-w-3xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex justify-between items-center mb-6"
+        >
           <h2 className="text-2xl font-bold">{selectedSubject} Quiz</h2>
-          <div className="flex items-center space-x-2 text-lg">
-            <Clock className="w-5 h-5" />
-            <span>{Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}</span>
-          </div>
-        </div>
+          <motion.div 
+            className="flex items-center space-x-2 text-lg glass dark:glass-dark px-4 py-2 rounded-lg"
+            animate={{ scale: timeLeft < 60 ? [1, 1.1, 1] : 1 }}
+            transition={{ duration: 0.5, repeat: timeLeft < 60 ? Infinity : 0 }}
+          >
+            <Clock className={`w-5 h-5 ${timeLeft < 60 ? 'text-red-500' : ''}`} />
+            <span className={timeLeft < 60 ? 'text-red-500 font-bold' : ''}>
+              {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
+            </span>
+          </motion.div>
+        </motion.div>
 
-        <div className="glass dark:glass-dark rounded-xl p-8">
-          <div className="mb-6">
-            <div className="flex justify-between text-sm mb-2">
-              <span>Question {currentQuestion + 1} of {quizData[selectedSubject].length}</span>
-              <span>Score: {score}</span>
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="glass dark:glass-dark rounded-xl p-8 relative overflow-hidden"
+        >
+          {/* Animated background gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 animate-gradient" />
+          
+          <div className="relative z-10">
+            <div className="mb-6">
+              <div className="flex justify-between text-sm mb-2">
+                <span>Question {currentQuestion + 1} of {quizData[selectedSubject].length}</span>
+                <span className="font-semibold">Score: {score}</span>
+              </div>
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${((currentQuestion + 1) / quizData[selectedSubject].length) * 100}%` }}
+                  className="h-3 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+                  transition={{ duration: 0.5 }}
+                />
+              </div>
             </div>
-            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-              <div
-                className="h-2 rounded-full bg-blue-500 transition-all"
-                style={{ width: `${((currentQuestion + 1) / quizData[selectedSubject].length) * 100}%` }}
-              />
-            </div>
-          </div>
 
-          <h3 className="text-2xl font-semibold mb-6">{question.q}</h3>
+            <motion.h3 
+              key={currentQuestion}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-2xl font-semibold mb-6"
+            >
+              {question.q}
+            </motion.h3>
 
-          <div className="space-y-3">
-            {question.options.map((option, idx) => (
-              <motion.button
-                key={idx}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => handleAnswer(idx)}
-                disabled={selectedAnswer !== null}
-                className={`w-full p-4 rounded-lg text-left transition ${
-                  selectedAnswer === null
-                    ? 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
-                    : selectedAnswer === idx
-                    ? idx === question.correct
-                      ? 'bg-green-500 text-white'
-                      : 'bg-red-500 text-white'
-                    : idx === question.correct
-                    ? 'bg-green-500 text-white'
-                    : 'bg-gray-100 dark:bg-gray-800'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span>{option}</span>
-                  {selectedAnswer !== null && (
-                    idx === question.correct ? (
-                      <CheckCircle className="w-6 h-6" />
-                    ) : selectedAnswer === idx ? (
-                      <XCircle className="w-6 h-6" />
-                    ) : null
+            <div className="space-y-3">
+              {question.options.map((option, idx) => (
+                <motion.button
+                  key={idx}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  whileHover={{ scale: selectedAnswer === null ? 1.02 : 1, x: selectedAnswer === null ? 5 : 0 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => handleAnswer(idx)}
+                  disabled={selectedAnswer !== null}
+                  className={`w-full p-4 rounded-lg text-left transition-all relative overflow-hidden ${
+                    selectedAnswer === null
+                      ? 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 hover:shadow-lg'
+                      : selectedAnswer === idx
+                      ? idx === question.correct
+                        ? 'bg-green-500 text-white shadow-lg shadow-green-500/50'
+                        : 'bg-red-500 text-white shadow-lg shadow-red-500/50'
+                      : idx === question.correct
+                      ? 'bg-green-500 text-white shadow-lg shadow-green-500/50'
+                      : 'bg-gray-100 dark:bg-gray-800 opacity-50'
+                  }`}
+                >
+                  {/* Shimmer effect on hover */}
+                  {selectedAnswer === null && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-700" />
                   )}
-                </div>
-              </motion.button>
-            ))}
+                  
+                  <div className="flex items-center justify-between relative z-10">
+                    <span className="font-medium">{option}</span>
+                    {selectedAnswer !== null && (
+                      <motion.div
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ type: "spring", stiffness: 200 }}
+                      >
+                        {idx === question.correct ? (
+                          <CheckCircle className="w-6 h-6" />
+                        ) : selectedAnswer === idx ? (
+                          <XCircle className="w-6 h-6" />
+                        ) : null}
+                      </motion.div>
+                    )}
+                  </div>
+                </motion.button>
+              ))}
+            </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </DashboardLayout>
   )
